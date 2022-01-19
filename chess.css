@@ -1,0 +1,36 @@
+.chess-table{
+    border: solid;
+    height: 320px;
+    width: 320px;
+    display: flex;
+    flex-direction: column;
+}
+.chess-row{
+    width: 320px;
+    height: 40px;
+    display: flex;
+    flex-direction: row;
+}
+.chess-block{
+    width: 40px;
+    height: 40px;
+}
+
+.chess-row:nth-child(even) > .chess-block:nth-child(odd),
+.chess-row:nth-child(odd) > .chess-block:nth-child(even){
+    background-color: rgb(61, 41, 41);
+}
+
+.chess-row:nth-child(even) > .chess-block:nth-child(even),
+.chess-row:nth-child(odd) > .chess-block:nth-child(odd){
+    background-color: rgb(177, 168, 152);
+}
+.active{
+    background-color: darkorange;
+    background: url(img/BlackKnight.png);
+    background-size: contain;
+
+}
+.green{
+    background: darkgreen;
+}
