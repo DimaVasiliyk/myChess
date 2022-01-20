@@ -14,6 +14,7 @@
 .chess-block{
     width: 40px;
     height: 40px;
+    box-sizing: border-box;
 }
 
 .chess-row:nth-child(even) > .chess-block:nth-child(odd),
@@ -25,12 +26,24 @@
 .chess-row:nth-child(odd) > .chess-block:nth-child(odd){
     background-color: rgb(177, 168, 152);
 }
-.active{
-    background-color: darkorange;
-    background: url(img/BlackKnight.png);
+.white-pawn{
+    background: url(img/WhitePawn.png);
     background-size: contain;
-
 }
-.green{
-    background: darkgreen;
+.black-pawn{
+    background: url(img/BlackPawn.png);
+    background-size: contain;
+}
+.white-queen{
+    background: url(img/WhiteQueen.png);
+    background-size: contain;
+}
+.black-queen{
+    background: url(img/BlackQueen.png);
+    background-size: contain;
+}
+.possible-move{
+    /* background-color: lightskyblue !important; */
+    border: 0.1px dashed  rgb(0, 255, 13);
+  
 }
