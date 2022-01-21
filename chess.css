@@ -1,4 +1,7 @@
+
 .chess-table{
+    margin-top: 300px;
+    margin-left: 800px;
     border: solid;
     height: 320px;
     width: 320px;
@@ -42,8 +45,14 @@
     background: url(img/BlackQueen.png);
     background-size: contain;
 }
-.possible-move{
-    /* background-color: lightskyblue !important; */
-    border: 0.1px dashed  rgb(0, 255, 13);
-  
+.active{
+    background-color: rgb(215, 253, 0) !important;
+}
+.possible-move::after{
+    content: '';
+    width: 40px;
+    height: 40px;
+    opacity: 0.5;
+    background-color: lightskyblue ;
+    position: absolute;
 }

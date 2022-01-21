@@ -6,10 +6,12 @@ let chess = [
   [0, 0, 0, 0, 0, 0, 0, 0],
   [0, 0, 0, 5, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 5, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0],
   // [ 1, 1, 1, 1, 1, 1, 1, 1],
-  [0, 0, 0, 0, 0, 0, 0, 5],
+  [0, 0, 0, 0, 0, 0, 0, 0],
 ];
+
+draw(chess);
 
 function draw(board) {
   const table = document.querySelector("#table");
@@ -25,145 +27,99 @@ function draw(board) {
         arr[j] === 5 ? `white-queen` : ``
       } ${
         arr[j] === -5 ? `black-queen` : ``
-      }" data-x="${j}" data-y="${i}" onclick=changePosition(${i},${j},${
+      }" data-x="${j}" data-y="${i}" onclick="changePosition(${i},${j},${
         arr[j]
-      })></div>`;
+      })"></div>`;
     }
     table.appendChild(row);
   }
 }
 
 let bufferCord = null;
+let availableMoves = [];
+let firstclick = [];
+
 
 function changePosition(y, x, value) {
-  if (!bufferCord) {
-    if (!value) {
+
+    if (availableMoves.length) {
+        moveFigure({ x, y , value}, availableMoves);
+        availableMoves= [];
       return;
     }
+        if (!value) {
+          return;
+        }
 
-    bufferCord = {
-      x,
-      y,
-      value,
-    };
-    // bottom(x,y)
-    up(x,y)
-    // right(x,y)
-    // left(x,y)
-    topLeftDiag(x, y);
-    // topRightDiag(x,y)
-    // bottomLeftDiag(x,y)
-    // bottomRightDiag(x,y)
-  } else {
-    if (value == 5 || value === -5) {
-      alert("this cell not empty");
-      return;
+    firstclick = {x,y,value};
+    if (value) {
+      document
+        .querySelector(`.chess-block[data-x="${x}"][data-y="${y}"]`)
+        .classList.toggle("active");
     }
+    availableMoves = [
+      ...bottom(x, y),
+      ...up(x, y),
+      ...right(x, y),
+      ...left(x, y),
+      ...topLeftDiag(x, y),
+      ...topRightDiag(x, y),
+      ...bottomLeftDiag(x, y),
+      ...bottomRightDiag(x, y),
+    ];
 
-    if (checkDirectionQeen(bufferCord.x, bufferCord.y, x, y)) {
-      chess[bufferCord.y][bufferCord.x] = 0;
-      chess[y][x] = bufferCord.value;
-      draw(chess);
-    }
-    bufferCord = null;
-  }
 }
 
-function checkDirectionQeen(x1, y1, x2, y2) {
-  if ((x1 - x2 == 1 || x1 - x2 == -1) && y1 - y2 == 0) {
-    return true;
-  }
-  if ((y1 - y2 == 1 || y1 - y2 == -1) && x1 - x2 == 0) {
-    return true;
-  }
-  // if (((x1 - x2) == 1 || (x1 - x2) == -1) && ((y1 - y2) == 1)) {
-  //     return true
-  // }
-  // if (((y1 - y2) == 1 || (y1 - y2) == -1) && ((x1 - x2) == -1)) {
-  //     return true
-  // }
-  return false;
-}
-
-draw(chess);
-
-function bottom(x, y) {
-  for (y; y < 8; y) {
+function getVector(x, y, dx, dy) {
+  let arrMoves = [];
+  while (y >= 0 && y <= 7 && x >= 0 && x <= 7) {
     document
-      .querySelector(`.chess-block[data-x="${x}"][data-y="${y++}"]`)
-      .classList.add("possible-move");
+      .querySelector(`.chess-block[data-x="${x}"][data-y="${y}"]`)
+      .classList.toggle("possible-move");
+    y += dy;
+    x += dx;
+    arrMoves.push({ x, y });
   }
+  return arrMoves;
 }
-
-function getVector(x, y, dx, dy){
-    while(y >= 0 && y <= 7 && x >=0 && x <= 7){
-        document
-            .querySelector(`.chess-block[data-x="${x}"][data-y="${y}"]`)
-            .classList.add("possible-move");
-        y += dy;
-        x += dx;
-    }
-}
-
-
 
 function up(x, y) {
-    getVector(x,y,0,-1);
+  return getVector(x, y, 0, -1);
 }
-
 function right(x, y) {
-  for (x; x < 8; x) {
-    document
-      .querySelector(`.chess-block[data-x="${x++}"][data-y="${y}"]`)
-      .classList.add("possible-move");
-  }
+  return getVector(x, y, 1, 0);
 }
 function left(x, y) {
-  for (x; x >= 0; x) {
-    document
-      .querySelector(`.chess-block[data-x="${x--}"][data-y="${y}"]`)
-      .classList.add("possible-move");
+  return getVector(x, y, -1, 0);
+}
+function bottom(x, y) {
+  return getVector(x, y, 0, 1);
+}
+function topLeftDiag(x, y) {
+  return getVector(x, y, -1, -1);
+}
+function topRightDiag(x, y) {
+  return getVector(x, y, 1, -1);
+}
+function bottomLeftDiag(x, y) {
+  return getVector(x, y, -1, 1);
+}
+function bottomRightDiag(x, y) {
+  return getVector(x, y, 1, 1);
+}
+
+function moveFigure(firstclick, moves) {
+  if (moves.find((m) => m.x === firstclick.x && m.y === firstclick.y)) {
+    console.log(firstclick.value);
+
+
+    chess[firstclick.y][firstclick.x] = 0;
+
+    
+    console.log(firstclick.x, firstclick.y);
+
+
+    chess[x][y] = firstclick.value;
+    draw(chess);
   }
 }
-function topLeftDiag (x, y) {
-    getVector(x,y,-1,-1);
-}
-
-// function topLeftDiag(cx, cy) {
-//   let y = cy - 1;
-//   let x = cx - 1;
-//   while (x >= 0) {
-//     const elem = document.querySelector(
-//       `.chess-block[data-x="${x}"][data-y="${y}"]`
-//     );
-//     console.log(elem);
-//     elem.classList.add("possible-move");
-//     console.log({ x, y });
-//     x--;
-//     y--;
-//   }
-// }
-
-// function topRightDiag(x,y){
-//     for(x; x <8 ; x){
-//         for( y; y >= 0 ; y){
-//             document.querySelector(`.chess-block[data-x="${++x}"][data-y="${--y}"]`).classList.add('possible-move');
-//             console.log(x,"x");
-//             console.log(y, "y");
-//         }
-//     }
-// }
-// function bottomLeftDiag(x,y){
-//     for( x; x >= 0 ; x){
-//         document.querySelector(`.chess-block[data-x="${x--}"][data-y="${y++}"]`).classList.add('possible-move');
-//     }
-// }
-// function bottomRightDiag(x,y){
-//     for( y; y < 8; y){
-//         document.querySelector(`.chess-block[data-x="${x++}"][data-y="${y++}"]`).classList.add('possible-move');
-//     }
-// }
-
-//         for( y; y <= 7; y ){
-//         document.querySelector(`.chess-block[data-x="${x++}"][data-y="${y++}"]`).classList.add('possible-move');
-// }
