@@ -45,6 +45,7 @@ function changePosition(y, x, value) {
     if (availableMoves.length) {
         moveFigure({ x, y , value}, availableMoves);
         availableMoves= [];
+    ;
       return;
     }
         if (!value) {
@@ -67,7 +68,7 @@ function changePosition(y, x, value) {
       ...bottomLeftDiag(x, y),
       ...bottomRightDiag(x, y),
     ];
-
+    chess[firstclick.y][firstclick.x] = 0
 }
 
 function getVector(x, y, dx, dy) {
@@ -113,13 +114,8 @@ function moveFigure(firstclick, moves) {
     console.log(firstclick.value);
 
 
-    chess[firstclick.y][firstclick.x] = 0;
-
-    
-    console.log(firstclick.x, firstclick.y);
-
-
-    chess[x][y] = firstclick.value;
+    chess[firstclick.y][firstclick.x] = 5;
+    // console.log(firstclick.x, firstclick.y);
     draw(chess);
   }
 }
