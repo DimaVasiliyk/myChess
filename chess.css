@@ -29,6 +29,21 @@
 .chess-row:nth-child(odd) > .chess-block:nth-child(odd){
     background-color: rgb(177, 168, 152);
 }
+.active{
+    background-color: rgb(215, 253, 0) !important;
+}
+.possible-move::after{
+    content: '';
+    width: 40px;
+    height: 40px;
+    opacity: 0.5;
+    background-color: lightskyblue ;
+    position: absolute;
+}
+
+
+
+
 .white-pawn{
     background: url(img/WhitePawn.png);
     background-size: contain;
@@ -45,14 +60,35 @@
     background: url(img/BlackQueen.png);
     background-size: contain;
 }
-.active{
-    background-color: rgb(215, 253, 0) !important;
+.white-king{
+    background: url(img/WhiteKing.png);
+    background-size: contain;
 }
-.possible-move::after{
-    content: '';
-    width: 40px;
-    height: 40px;
-    opacity: 0.5;
-    background-color: lightskyblue ;
-    position: absolute;
+.black-king{
+    background: url(img/BlackKing.png);
+    background-size: contain;
+}
+.white-bishop{
+    background: url(img/WhiteBishop.png);
+    background-size: contain;
+}
+.black-bishop{
+    background: url(img/BlackBishop.png);
+    background-size: contain;
+}
+.white-knight{
+    background: url(img/WhiteKnight.png);
+    background-size: contain;
+}
+.black-knight{
+    background: url(img/BlackKnight.png);
+    background-size: contain;
+}
+.white-rook{
+    background: url(img/WhiteRook.png);
+    background-size: contain;
+}
+.black-rook{
+    background: url(img/BlackRook.png);
+    background-size: contain;
 }
