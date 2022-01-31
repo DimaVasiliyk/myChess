@@ -1,7 +1,4 @@
-function horse(){
-    let x = this.dataset.x
-    let y = this.dataset.y
-
+ function horse(x,y){
     if(+ x + 2 < 8 && + y + 1 < 8 ){
         document.querySelector(`.chess-block[data-x="${+x+2}"][data-y="${+y+1}"]`).classList.add('active');
     }   
@@ -27,3 +24,5 @@ function horse(){
         document.querySelector(`.chess-block[data-x="${+x+1}"][data-y="${+y-2}"]`).classList.add('active');
     }
 }
+
+export {horse}
